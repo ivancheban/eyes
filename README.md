@@ -1,71 +1,82 @@
-# eyes
+# Eye Break Reminder
 
-```py
-import tkinter as tk
-from tkinter import messagebox
-import time
+A simple desktop application built with Python and Tkinter to remind you to take regular breaks from your screen, helping to reduce eye strain. The application runs a countdown timer and displays a notification when it's time to rest your eyes.
 
+
+![Main window](img/main-window.png)
+
+## Features
+
+-   **Simple Interface**: A clean and straightforward user interface.
+-   **Countdown Timer**: Visually displays the time remaining until your next break in `MM:SS` format.
+-   **Start/Stop Control**: Easily start and stop the timer at any time.
+-   **Break Notifications**: A pop-up message box alerts you when it's time for a break.
+-   **Automatic Cycle**: After the break is over, the timer for the next work session starts automatically.
+-   **Customizable Durations**: Easily change the work and break durations by modifying variables in the code.
+
+## How It Works
+
+The application operates on a simple work-break cycle:
+
+1.  **Work Session**: You start a work timer, which counts down from a predefined duration (default is 3 minutes).
+2.  **Break Time**: When the timer reaches zero, a message box appears, telling you to take a break.
+3.  **Break Session**: The application pauses for the break duration (default is 9 seconds).
+4.  **Restart**: After the break, the work timer automatically resets and starts the countdown for the next session.
+
+You can manually stop the timer at any point using the "Stop" button and restart it with the "Start" button.
+
+## Prerequisites
+
+-   **Python 3**: The script is written for Python 3.
+-   **Tkinter**: This is the standard GUI library for Python and is included with most Python installations. No external libraries are needed.
+
+## How to Run the Application
+
+1.  **Save the Code**: Save the code into a file named `eye_break_app.py` (or any other `.py` name).
+
+2.  **Open a Terminal**: Open a terminal or command prompt.
+
+3.  **Navigate to the Directory**: Use the `cd` command to navigate to the folder where you saved the file.
+    ```bash
+    cd path/to/your/folder
+    ```
+
+4.  **Run the Script**: Execute the script using Python.
+    ```bash
+    python eye_break_app.py
+    ```
+
+The application window will appear, and you can click "Start" to begin the timer.
+
+## Customization
+
+You can easily customize the duration of the work and break periods by changing the values in the `__init__` method of the `EyeBreakApp` class.
+
+Open the `eye_break_app.py` file and find these lines:
+
+```python
 class EyeBreakApp:
     def __init__(self, master):
-        self.master = master
-        master.title("Eye Break Reminder")
+        # ... (other code)
 
         self.work_duration = 180  # 3 minutes in seconds
         self.break_duration = 9  # 9 seconds
 
-        self.label = tk.Label(master, text="Time to the next break:")
-        self.label.pack()
-
-        self.time_left_label = tk.Label(master, text="", font=("Helvetica", 24))
-        self.time_left_label.pack()
-
-        self.start_button = tk.Button(master, text="Start", command=self.start_timer)
-        self.start_button.pack()
-
-        self.stop_button = tk.Button(master, text="Stop", command=self.stop_timer, state=tk.DISABLED)
-        self.stop_button.pack()
-
-        self.is_running = False
-        self.remaining_time = self.work_duration
-        self.update_time_left_label()
-
-    def start_timer(self):
-        self.is_running = True
-        self.start_button.config(state=tk.DISABLED)
-        self.stop_button.config(state=tk.NORMAL)
-        self.countdown()
-
-    def stop_timer(self):
-        self.is_running = False
-        self.start_button.config(state=tk.NORMAL)
-        self.stop_button.config(state=tk.DISABLED)
-
-    def countdown(self):
-        if self.is_running and self.remaining_time > 0:
-            self.update_time_left_label()
-            self.remaining_time -= 1
-            self.master.after(1000, self.countdown)
-        elif self.is_running and self.remaining_time == 0:
-            self.take_break()
-
-    def take_break(self):
-        self.is_running = False
-        messagebox.showinfo("Break Time", "Time for a 20-second eye break!")
-        self.master.after(self.break_duration * 1000, self.post_break)
-
-    def post_break(self):
-        self.remaining_time = self.work_duration
-        self.update_time_left_label()
-        self.start_timer()
-
-    def update_time_left_label(self):
-        mins, secs = divmod(self.remaining_time, 60)
-        time_format = '{:02d}:{:02d}'.format(mins, secs)
-        self.time_left_label.config(text=time_format)
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = EyeBreakApp(root)
-    root.mainloop()
-
+        # ... (other code)
 ```
+
+-   **To change the work duration**: Modify the value of `self.work_duration`. The value is in seconds. For example, for a 20-minute work session, set it to `1200`.
+    ```python
+    self.work_duration = 1200  # 20 minutes
+    ```
+
+-   **To change the break duration**: Modify the value of `self.break_duration`. For example, for a 20-second break, set it to `20`.
+    ```python
+    self.break_duration = 20  # 20 seconds
+    ```
+
+> **Note**: The default break notification message says `"Time for a 20-second eye break!"` but the code's default break duration is 9 seconds. You may want to adjust `self.break_duration` to `20` to match the message, or change the message text in the `take_break` method.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE.md).
