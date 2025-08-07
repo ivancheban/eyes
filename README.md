@@ -75,8 +75,6 @@ class EyeBreakApp:
     self.break_duration = 20  # 20 seconds
     ```
 
-> **Note**: The default break notification message says `"Time for a 20-second eye break!"` but the code's default break duration is 9 seconds. You may want to adjust `self.break_duration` to `20` to match the message, or change the message text in the `take_break` method.
-
 ## License
 
 This project is open-source and available under the [MIT License](LICENSE.md).
