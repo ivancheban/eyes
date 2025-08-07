@@ -47,7 +47,7 @@ class EyeBreakApp:
 
     def take_break(self):
         self.is_running = False
-        messagebox.showinfo("Break Time", "Time for a 20-second eye break!")
+        messagebox.showinfo("Break Time", "Time for a break!")
         self.master.after(self.break_duration * 1000, self.post_break)
 
     def post_break(self):
